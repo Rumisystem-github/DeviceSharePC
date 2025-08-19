@@ -46,6 +46,9 @@ public class Main {
 	public static String token = "a";
 
 	public static void main(String[] args) throws NoSuchAlgorithmException, UnknownHostException, IOException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+		ID = args[0];
+		token = args[1];
+
 		//鍵生成
 		String key_type = "RSA";
 		KeyPairGenerator kpg = KeyPairGenerator.getInstance(key_type);
