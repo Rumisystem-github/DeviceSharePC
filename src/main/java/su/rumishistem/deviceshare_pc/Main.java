@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -23,9 +22,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.UUID;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,7 +49,7 @@ public class Main {
 		String key_type = "RSA";
 		KeyPairGenerator kpg = KeyPairGenerator.getInstance(key_type);
 		KeyPair kp = kpg.generateKeyPair();
-		byte[] sk = kp.getPrivate().getEncoded();
+		//byte[] sk = kp.getPrivate().getEncoded();
 		byte[] pk = kp.getPublic().getEncoded();
 
 		//サーバーと鍵効果
