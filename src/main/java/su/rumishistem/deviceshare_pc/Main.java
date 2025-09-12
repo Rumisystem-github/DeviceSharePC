@@ -41,7 +41,7 @@ public class Main {
 	public static String ID = UUID.randomUUID().toString();
 	public static String token = "a";
 
-	public static void main(String[] args) throws NoSuchAlgorithmException, UnknownHostException, IOException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	public static void main(String[] args) throws NoSuchAlgorithmException, UnknownHostException, IOException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InterruptedException {
 		ID = args[0];
 		token = args[1];
 
@@ -113,7 +113,7 @@ public class Main {
 		}
 	}
 
-	private static byte[] write_cpu_used() throws IOException {
+	private static byte[] write_cpu_used() throws IOException, InterruptedException {
 		int cpu_used = InfoGeter.cpu_used();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		baos.write(0x01);//0x01=CPU使用率
