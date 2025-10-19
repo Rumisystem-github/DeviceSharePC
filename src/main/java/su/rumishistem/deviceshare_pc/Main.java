@@ -22,6 +22,7 @@ public class Main {
 	private static String http_server_host = "deviceshare.rumiserver.com";
 	public static String tcp_server_host = "deviceshare.rumiserver.com";
 	public static String udp_server_host = "192.168.100.120";
+	public static boolean tcp_tls_enable = true;
 
 	public static String ID = UUID.randomUUID().toString();
 	public static String token = "a";
@@ -40,8 +41,18 @@ public class Main {
 
 		for (String arg:args) {
 			if (arg.equals("--dev")) {
+				//デバッグ用
 				http_server_host = "deviceshare.beta.rumiserver.com";
+				tcp_tls_enable = false;
+				tcp_server_host = "192.168.100.120";
+				udp_server_host = "192.168.100.120";
+			} else if (arg.equals("--rrrr")) {
+				//おれ
+				tcp_tls_enable = false;
+				tcp_server_host = "192.168.0.125";
+				udp_server_host = "192.168.0.125";
 			} else if (arg.equals("start")) {
+				//開始
 				start = true;
 			} else {
 				System.out.println("引数が不適切です");

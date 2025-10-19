@@ -6,6 +6,7 @@ import static su.rumishistem.deviceshare_pc.Main.tcp_port;
 import static su.rumishistem.deviceshare_pc.Main.udp_port;
 import static su.rumishistem.deviceshare_pc.Main.udp_server_host;
 import static su.rumishistem.deviceshare_pc.Main.tcp_server_host;
+import static su.rumishistem.deviceshare_pc.Main.tcp_tls_enable;
 
 import java.io.*;
 import java.net.*;
@@ -132,13 +133,24 @@ public class Sender {
 	}
 
 	private static PublicKey tcp_handshake(byte[] pk, String key_type, String id, String token) throws UnknownHostException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-		SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-		SSLSocket socket = (SSLSocket) factory.createSocket(tcp_server_host, tcp_port);
+		PrintWriter out = null;
+		BufferedReader in = null;
 
-		socket.setEnabledProtocols(new String[] {"TLSv1.3", "TLSv1.2", "TLSv1.1"});
+		SSLSocket ssl_socket = null;
+		Socket plain_socket = null;
 
-		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		if (tcp_tls_enable) {
+			SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+			ssl_socket = (SSLSocket) factory.createSocket(tcp_server_host, tcp_port);
+			ssl_socket.setEnabledProtocols(new String[] {"TLSv1.3", "TLSv1.2", "TLSv1.1"});
+
+			out = new PrintWriter(ssl_socket.getOutputStream(), true);
+			in = new BufferedReader(new InputStreamReader(ssl_socket.getInputStream()));
+		} else {
+			plain_socket = new Socket(tcp_server_host, tcp_port);
+			out = new PrintWriter(plain_socket.getOutputStream(), true);
+			in = new BufferedReader(new InputStreamReader(plain_socket.getInputStream()));
+		}
 
 		try {
 			//へろー
@@ -171,7 +183,12 @@ public class Sender {
 			out.println("QUIT");
 			out.close();
 			in.close();
-			socket.close();
+
+			if (tcp_tls_enable) {
+				ssl_socket.close();
+			} else {
+				plain_socket.close();
+			}
 		}
 	}
 }
