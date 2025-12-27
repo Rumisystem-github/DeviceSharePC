@@ -21,7 +21,7 @@ public class Main {
 	private static final String token_path = "/etc/deviceshare/token";
 	private static String http_server_host = "deviceshare.rumiserver.com";
 	public static String tcp_server_host = "deviceshare.rumiserver.com";
-	public static String udp_server_host = "192.168.100.120";
+	public static String udp_server_host = "deviceshare.rumiserver.com";
 	public static boolean tcp_tls_enable = true;
 
 	public static String ID = UUID.randomUUID().toString();
@@ -99,8 +99,6 @@ public class Main {
 			Files.write(Path.of(token_path), sb.toString().getBytes(StandardCharsets.UTF_8), StandardOpenOption.WRITE);
 
 			LOG(LOG_TYPE.OK, "初期設定が完了しました！");
-
-			
 
 			scanner.close();
 		}
